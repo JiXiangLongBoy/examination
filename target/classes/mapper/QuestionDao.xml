@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.examination.dao.QuestionDao">
+
+    <select id="showSubjectType" resultType="com.qfedu.examination.entity.Subject">
+        select * from t_subject
+    </select>
+
+    <select id="showQuestionType" resultType="com.qfedu.examination.entity.QuestionType">
+        select * from t_question_type
+    </select>
+
+    <select id="choiceList" resultType="com.qfedu.examination.entity.ChoiceQuestion" parameterType="int">
+        select * from t_choice where subjectID=#{subjectID}
+    </select>
+
+</mapper>
