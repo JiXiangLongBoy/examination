@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qfedu.examination.dao.UserDao">
+
+    <resultMap id="userMap" type="com.qfedu.examination.vo.UserList">
+        <result column="uid" property="uid"></result>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <collection property="role" javaType="java.util.ArrayList" ofType="Role" >
+            <result column="rid" property="rid"></result>
+            <result column="rdesc" property="rdesc"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findByName" parameterType="string" resultType="user">
+        select * from t_user where username = #{username}
+    </select>
+
+    <select id="findRolesIdByUserId" parameterType="int" resultType="int">
+        select r.rid
+		from t_user u
+        inner join t_user_role ur
+        on u.uid=ur.uid
+        inner join t_role r
+        on r.rid=ur.rid
+        where u.uid=#{uid}
+    </select>
+
+    <select id="findRolesById" parameterType="int" resultType="string">
+        select r.rdesc
+		from t_user u
+        inner join t_user_role ur
+        on u.uid=ur.uid
+        inner join t_role r
+        on r.rid=ur.rid
+        where u.uid=#{uid}
+    </select>
+
+    <select id="findPermsByName" parameterType="string" resultType="string">
+       SELECT DISTINCT p.pdesc
+        FROM t_user u
+        INNER JOIN t_user_role ur
+        on u.uid=ur.uid
+        INNER JOIN t_role_perm rp
+        on ur.rid = rp.rid
+        INNER JOIN t_permission p
+        ON rp.pid=p.pid
+        WHERE u.username=#{username}
+        AND p.pdesc !='' AND p.pdesc is NOT NULL;
+    </select>
+
+    <select id="findRolesAll"  resultMap="userMap">
+        select r.rdesc, u.username, u.password, u.uid
+		from t_user u
+        inner join t_user_role ur
+        on u.uid=ur.uid
+        inner join t_role r
+        on r.rid=ur.rid
+    </select>
+
+    <select id="findRoleId" parameterType="int" resultMap="userMap">
+        select r.rdesc, u.username, u.password
+		from t_user u
+        inner join t_user_role ur
+        on u.uid=ur.uid
+        inner join t_role r
+        on r.rid=ur.rid
+        where u.uid = #{uid}
+    </select>
+
+    <insert id="addRole" parameterType="int" >
+        insert into t_user_role (uid, rid) values (#{uid}, 1)
+    </insert>
+
+    <delete id="deleteRole" parameterType="int" >
+        delete from t_user_role where uid = #{uid} and rid = 1
+    </delete>
+
+
+    </mapper>
