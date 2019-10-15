@@ -1,6 +1,8 @@
 package com.qfedu.examination.controller;
 
-import com.qfedu.examination.entity.Subject;
+import com.qfedu.examination.entity.ChoiceQuestion;
+import com.qfedu.examination.entity.JudgeQuestion;
+import com.qfedu.examination.entity.ShortQuestion;
 import com.qfedu.examination.service.QuestionService;
 import com.qfedu.examination.vo.R;
 import io.swagger.annotations.Api;
@@ -35,8 +37,7 @@ public class QuestionController {
     //删除对应的选择题
     @GetMapping("/question/choiceDelete")
     public R choiceDelete(int id){
-        System.out.println(id);
-        return R.setOK();
+        return questionService.choiceDelete(id);
     }
     //修改对应的选择题
     @PostMapping("/question/choiceUpdate")
@@ -46,8 +47,44 @@ public class QuestionController {
 
     //录入对应的选择题
     @PostMapping("/question/choiceEntering")
-    public R choiceEntering(){
-        return R.setOK();
+    public R choiceEntering(ChoiceQuestion choiceQuestion){
+        return questionService.choiceEntering(choiceQuestion);
     }
 
+    //展示对应科目的所有的判断题
+    @GetMapping("/question/judgeList")
+    public R judgeList(int subjectID){
+        return questionService.judgeList(subjectID);
+    }
+
+    //删除对应科目的判断题
+    @GetMapping("/question/judgeDelete")
+    public R judgeDelete(int id){
+        return questionService.judgeDelete(id);
+    }
+
+    //录入对应的判断题
+    @PostMapping("/question/judgeEntering")
+    public R saveJudge(JudgeQuestion judgeQuestion){
+        return questionService.saveJudge(judgeQuestion);
+    }
+
+
+    //展示对应科目的所有的简答题
+    @GetMapping("/question/shortList")
+    public R queryShort(int subjectID){
+        return questionService.queryShort(subjectID);
+    }
+
+    //删除对应科目的简答题
+    @GetMapping("/question/shortDelete")
+    public R deleteShort(int id){
+        return questionService.deleteShort(id);
+    }
+
+    //录入对应的简答题
+    @PostMapping("/question/shortEntering")
+    public R saveShort(ShortQuestion shortQuestion){
+        return questionService.saveShort(shortQuestion);
+    }
 }
