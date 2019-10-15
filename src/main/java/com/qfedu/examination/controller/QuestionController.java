@@ -17,44 +17,81 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
-    @ApiOperation(value = "展示学科",notes = "展示所有的学科")
+    @ApiOperation(value = "展示所有学科",notes = "展示所有的学科")
     @GetMapping("/question/showSubjectType")
     public R showSubjectType(){
         return questionService.showSubjectType();
     }
 
-    //展示所有的题目类型
+    @ApiOperation(value = "展示题目类型",notes = "展示所有的题目类型")
     @GetMapping("/question/showQuestionType")
     public R showQuestionType(){
         return questionService.showQuestionType();
     }
 
-    //展示对应科目的所有的选择题
+
+
+
+
+
+    @ApiOperation(value = "展示对应科目的选择题",notes = "展示对应科目的选择题")
     @GetMapping("/question/choiceList")
     public R choiceList(int subjectID){
         return questionService.choiceList(subjectID);
     }
-    //删除对应的选择题
+
+    @ApiOperation(value = "导出对应科目的选择题",notes = "导出对应科目的选择题")
+    @GetMapping("/question/deriveChoice")
+    public R deriveChoice(int subjectID,String filePath,String fileName){
+        return questionService.deriveChoice(subjectID,filePath,fileName);
+    }
+
+    @ApiOperation(value = "导入对应科目的选择题",notes = "导入对应科目的选择题")
+    @GetMapping("/question/toLeadChoice")
+    public R toLeadChoice(String filePath){
+        return questionService.toLeadChoice(filePath);
+    }
+
+    @ApiOperation(value = "删除对应科目的选择题",notes = "删除对应科目的选择题")
     @GetMapping("/question/choiceDelete")
     public R choiceDelete(int id){
         return questionService.choiceDelete(id);
     }
+
     //修改对应的选择题
     @PostMapping("/question/choiceUpdate")
     public R choiceUpdate(){
         return R.setOK();
     }
 
-    //录入对应的选择题
+    @ApiOperation(value = "录入对应科目的选择题",notes = "录入对应科目的选择题")
     @PostMapping("/question/choiceEntering")
     public R choiceEntering(ChoiceQuestion choiceQuestion){
         return questionService.choiceEntering(choiceQuestion);
     }
 
+
+
+
+
+
+
     //展示对应科目的所有的判断题
     @GetMapping("/question/judgeList")
     public R judgeList(int subjectID){
         return questionService.judgeList(subjectID);
+    }
+
+    @ApiOperation(value = "导出对应科目的判断题",notes = "导出对应科目的判断题")
+    @GetMapping("/question/deriveJudge")
+    public R deriveJudge(int subjectID,String filePath,String fileName){
+        return questionService.deriveJudge(subjectID,filePath,fileName);
+    }
+
+    @ApiOperation(value = "导入对应科目的判断题",notes = "导入对应科目的判断题")
+    @GetMapping("/question/toLeadJudge")
+    public R toLeadJudge(String filePath){
+        return questionService.toLeadJudge(filePath);
     }
 
     //删除对应科目的判断题
@@ -70,11 +107,30 @@ public class QuestionController {
     }
 
 
+
+
+
+
+
+
     //展示对应科目的所有的简答题
     @GetMapping("/question/shortList")
     public R queryShort(int subjectID){
         return questionService.queryShort(subjectID);
     }
+
+    @ApiOperation(value = "导出对应科目的简答",notes = "导出对应科目的简答题")
+    @GetMapping("/question/deriveShort")
+    public R deriveShort(int subjectID,String filePath,String fileName){
+        return questionService.deriveShort(subjectID,filePath,fileName);
+    }
+
+    @ApiOperation(value = "导入对应科目的简答题",notes = "导入对应科目的简答题")
+    @GetMapping("/question/toLeadShort")
+    public R toLeadShort(String filePath){
+        return questionService.toLeadShort(filePath);
+    }
+
 
     //删除对应科目的简答题
     @GetMapping("/question/shortDelete")

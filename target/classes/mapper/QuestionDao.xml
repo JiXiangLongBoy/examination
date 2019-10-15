@@ -32,7 +32,7 @@
 
 
     <select id="judgeList" resultType="com.qfedu.examination.entity.JudgeQuestion">
-        select * from t_judge
+        select * from t_judge where subjectID=#{subjectID}
     </select>
 
     <delete id="judgeDelete" parameterType="int">
@@ -45,7 +45,7 @@
 
 
     <select id="queryShort" resultType="com.qfedu.examination.entity.ShortQuestion">
-        select * from t_short
+        select * from t_short where subjectID=#{subjectID}
     </select>
 
     <delete id="deleteShort" parameterType="int">
