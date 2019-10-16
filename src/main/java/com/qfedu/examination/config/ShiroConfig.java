@@ -43,6 +43,10 @@ public class ShiroConfig {
         // authc:必须认证通过才可以访问;
         // anon: 匿名访问
         filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-resources", "anon");
+        filterChainDefinitionMap.put("/v2/api-docs", "anon");
+        filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/layui/**", "anon");
@@ -81,7 +85,8 @@ public class ShiroConfig {
         return customRealm;
     }
 
-    /* 注解配置 */
+// 注解配置
+
     @Bean
     public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();

@@ -58,13 +58,13 @@ public class QuestionController {
         return questionService.choiceDelete(id);
     }
 
-    //修改对应的选择题
-    @PostMapping("/question/choiceUpdate")
-    public R choiceUpdate(){
-        return R.setOK();
+    @ApiOperation(value = "根据题目id展示单个选择题的详细信息",notes = "根据题目id展示单个选择题的详细信息")
+    @GetMapping("/question/choiceListByID")
+    public R choiceByListByID(int id){
+        return questionService.choiceListByID(id);
     }
 
-    @ApiOperation(value = "录入对应科目的选择题",notes = "录入对应科目的选择题")
+    @ApiOperation(value = "录入(修改)对应科目的选择题",notes = "录入(修改)对应科目的选择题")
     @PostMapping("/question/choiceEntering")
     public R choiceEntering(ChoiceQuestion choiceQuestion){
         return questionService.choiceEntering(choiceQuestion);
@@ -76,10 +76,16 @@ public class QuestionController {
 
 
 
-    //展示对应科目的所有的判断题
+    @ApiOperation(value = "对应科目的判断题",notes = "展示对应科目的判断题")
     @GetMapping("/question/judgeList")
     public R judgeList(int subjectID){
         return questionService.judgeList(subjectID);
+    }
+
+    @ApiOperation(value = "根据题目id展示单个判断题的详细信息",notes = "根据题目id展示单个判断题的详细信息")
+    @GetMapping("/question/judgeListByID")
+    public R judgeListByID(int id){
+        return questionService.judgeListByID(id);
     }
 
     @ApiOperation(value = "导出对应科目的判断题",notes = "导出对应科目的判断题")
@@ -94,13 +100,13 @@ public class QuestionController {
         return questionService.toLeadJudge(filePath);
     }
 
-    //删除对应科目的判断题
+    @ApiOperation(value = "删除对应科目的判断题",notes = "删除对应科目的判断题")
     @GetMapping("/question/judgeDelete")
     public R judgeDelete(int id){
         return questionService.judgeDelete(id);
     }
 
-    //录入对应的判断题
+    @ApiOperation(value = "录入(修改)对应科目的判断题",notes = "录入(修改)对应科目的判断题")
     @PostMapping("/question/judgeEntering")
     public R saveJudge(JudgeQuestion judgeQuestion){
         return questionService.saveJudge(judgeQuestion);
@@ -113,7 +119,7 @@ public class QuestionController {
 
 
 
-    //展示对应科目的所有的简答题
+    @ApiOperation(value = "展示对应科目的简答题",notes = "展示对应科目的简答题")
     @GetMapping("/question/shortList")
     public R queryShort(int subjectID){
         return questionService.queryShort(subjectID);
@@ -125,6 +131,12 @@ public class QuestionController {
         return questionService.deriveShort(subjectID,filePath,fileName);
     }
 
+    @ApiOperation(value = "根据题目id展示单个简答题的详细信息",notes = "根据题目id展示单个简答题的详细信息")
+    @GetMapping("/question/shortListByID")
+    public R shortListByID(int id){
+        return questionService.shortListByID(id);
+    }
+
     @ApiOperation(value = "导入对应科目的简答题",notes = "导入对应科目的简答题")
     @GetMapping("/question/toLeadShort")
     public R toLeadShort(String filePath){
@@ -132,13 +144,13 @@ public class QuestionController {
     }
 
 
-    //删除对应科目的简答题
+    @ApiOperation(value = "删除对应科目的简答题",notes = "删除对应科目的简答题")
     @GetMapping("/question/shortDelete")
     public R deleteShort(int id){
         return questionService.deleteShort(id);
     }
 
-    //录入对应的简答题
+    @ApiOperation(value = "录入(修改)对应科目的简答题",notes = "对应科目的简答题")
     @PostMapping("/question/shortEntering")
     public R saveShort(ShortQuestion shortQuestion){
         return questionService.saveShort(shortQuestion);

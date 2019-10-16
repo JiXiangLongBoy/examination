@@ -19,11 +19,18 @@ public interface QuestionService {
 
     R toLeadChoice(String filePath);
 
+
+    R choiceListByID(int id);
+
+
     R choiceDelete(int id);
 
     R choiceEntering(ChoiceQuestion choiceQuestion);
 
     R judgeList(int subjectID);
+
+    R judgeListByID(int id);
+
 
     R deriveJudge(int subjectID, String filePath, String fileName);
 
@@ -43,4 +50,5 @@ public interface QuestionService {
 
     R saveShort(ShortQuestion shortQuestion);
 
+    R shortListByID(int id);
 }

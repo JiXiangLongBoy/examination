@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class JudgeQuestion {
-    private int id;
+    private Integer id;
     private int score;
     private String question;
     private int answer;

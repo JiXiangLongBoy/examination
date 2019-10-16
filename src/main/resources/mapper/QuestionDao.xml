@@ -23,6 +23,17 @@
         delete from t_choice where id=#{id}
     </delete>
 
+    <update id="updateChoice" parameterType="choiceQuestion">
+        update t_choice set score=#{score},question=#{question},choiceA=#{choiceA}
+        ,choiceB=#{choiceB},choiceC=#{choiceC},choiceD=#{choiceD},answer=#{answer},subjectID=#{subjectId}
+        where id=#{id}
+    </update>
+
+    <select id="choiceListByID" resultType="com.qfedu.examination.entity.ChoiceQuestion" parameterType="int">
+        select * from t_choice where id=#{id}
+    </select>
+
+
     <insert id="choiceEntering" parameterType="choiceQuestion">
         insert into t_choice(score,question,choiceA,choiceB,choiceC,choiceD,answer,subjectID)
          values(#{score},#{question},#{choiceA},#{choiceB},#{choiceC},#{choiceD},#{answer},#{subjectId})
@@ -35,9 +46,18 @@
         select * from t_judge where subjectID=#{subjectID}
     </select>
 
+    <select id="judgeListByID" resultType="com.qfedu.examination.entity.JudgeQuestion">
+        select * from t_judge where id=#{id}
+    </select>
+
     <delete id="judgeDelete" parameterType="int">
         delete from t_judge where id=#{id}
     </delete>
+
+    <update id="updateJudge" parameterType="judgeQuestion">
+        update t_judge set score=#{score},question=#{question},answer=#{answer},subjectID=#{subjectID}
+        where id=#{id}
+    </update>
 
     <insert id="saveJudge" parameterType="judgeQuestion">
         insert into t_judge values(null,#{score},#{question},#{answer},#{subjectID})
@@ -48,6 +68,10 @@
         select * from t_short where subjectID=#{subjectID}
     </select>
 
+    <select id="shortListByID" resultType="com.qfedu.examination.entity.ShortQuestion">
+        select * from t_short where id=#{id}
+    </select>
+
     <delete id="deleteShort" parameterType="int">
         delete from t_short where id=#{id}
     </delete>
@@ -55,6 +79,11 @@
     <insert id="saveShort" parameterType="shortQuestion">
         insert into t_short values(null,#{score},#{question},#{answer},#{subjectID})
     </insert>
+
+    <update id="updateShort" parameterType="shortQuestion">
+        update t_short set score=#{score},question=#{question},answer=#{answer},subjectID=#{subjectID}
+        where id=#{id}
+    </update>
 
 
 </mapper>

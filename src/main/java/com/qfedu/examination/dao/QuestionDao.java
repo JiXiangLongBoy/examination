@@ -27,4 +27,16 @@ public interface QuestionDao {
     int deleteShort(int id);
 
     int saveShort(ShortQuestion shortQuestion);
+
+    ChoiceQuestion choiceListByID(int id);
+
+    JudgeQuestion judgeListByID(int id);
+
+    ShortQuestion shortListByID(int id);
+
+    int updateChoice(ChoiceQuestion choiceQuestion);
+
+    int updateJudge(JudgeQuestion judgeQuestion);
+
+    int updateShort(ShortQuestion shortQuestion);
 }

@@ -61,6 +61,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     }
 
+    @Override
+    public R choiceListByID(int id) {
+
+       ChoiceQuestion oneChoice = questionDao.choiceListByID(id);
+        return R.setOK("success",oneChoice);
+    }
+
 
     @Override
     public R choiceDelete(int id) {
@@ -74,12 +81,24 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public R choiceEntering(ChoiceQuestion choiceQuestion) {
-        int count = questionDao.choiceEntering(choiceQuestion);
-        if (count == 1) {
-            return R.setOK("插入数据成功");
-        } else {
-            return R.setERROR("插入数据失败");
+
+        if (choiceQuestion.getId()==null || choiceQuestion.getId()==0){
+            int count = questionDao.choiceEntering(choiceQuestion);
+            if (count == 1) {
+                return R.setOK("插入数据成功");
+            } else {
+                return R.setERROR("插入数据失败");
+            }
+        }else {
+            int count = questionDao.updateChoice(choiceQuestion);
+            if (count == 1) {
+                return R.setOK("修改数据成功");
+            } else {
+                return R.setERROR("修改数据失败");
+            }
         }
+
+
 
     }
 
@@ -87,6 +106,12 @@ public class QuestionServiceImpl implements QuestionService {
     public R judgeList(int subjectID) {
 
         return R.setOK("success", questionDao.judgeList(subjectID));
+    }
+
+    @Override
+    public R judgeListByID(int id) {
+
+        return R.setOK("success",questionDao.judgeListByID(id));
     }
 
     @Override
@@ -121,8 +146,16 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public R saveJudge(JudgeQuestion judgeQuestion) {
-        int i = questionDao.saveJudge(judgeQuestion);
-        return i == 1 ? R.setOK() : R.setERROR();
+
+        if (judgeQuestion.getId() == null || judgeQuestion.getId()==0){
+            int i = questionDao.saveJudge(judgeQuestion);
+            return R.setResult(i==1,"录入判断题");
+        }else {
+            int i = questionDao.updateJudge(judgeQuestion);
+            return R.setResult(i==1,"修改判断题");
+        }
+
+
     }
 
     @Override
@@ -163,8 +196,21 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public R saveShort(ShortQuestion shortQuestion) {
-        int i = questionDao.saveShort(shortQuestion);
-        return i == 1 ? R.setOK() : R.setERROR();
+
+        if (shortQuestion.getId() == null || shortQuestion.getId() == 0){
+            int i = questionDao.saveShort(shortQuestion);
+            return i == 1 ? R.setOK("录入简答题成功") : R.setERROR("录入简答题失败");
+        } else {
+            int i = questionDao.updateShort(shortQuestion);
+            return i == 1 ? R.setOK("修改简答题成功") : R.setERROR("修改简答题失败");
+        }
+
+
+    }
+
+    @Override
+    public R shortListByID(int id) {
+        return R.setOK("success",questionDao.shortListByID(id));
     }
 
 
