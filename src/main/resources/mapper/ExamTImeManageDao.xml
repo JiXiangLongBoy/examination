@@ -5,7 +5,22 @@
 <mapper namespace="com.qfedu.examination.dao.ExamTImeManageDao">
 
     <select id="queryAllExamTime" resultType="com.qfedu.examination.entity.ExamTime">
-        select e.*,s.sname from t_examtimemanage e inner join t_subject s where e.sid = s.sid
+        select e.*,s.sname from t_examtime e inner join t_subject s where e.sid = s.sid
     </select>
+
+    <select id="queryOneExamTime" parameterType="int" resultType="com.qfedu.examination.entity.ExamTime">
+        select e.*,s.sname from t_examtime e inner join t_subject s where e.id=#{id} and e.sid = s.sid
+    </select>
+
+    <insert id="saveExamTime" parameterType="com.qfedu.examination.entity.ExamTime">
+        insert into t_examtime(sid,begins,ends,duration) values(#{sID},#{begins},#{ends},#{duration})
+    </insert>
+
+    <update id="updateExamTime" parameterType="com.qfedu.examination.entity.ExamTime">
+        update t_examtime set sid=#{sID},begins=#{begins},ends=#{ends},duration=#{duration}
+        where id = #{id}
+    </update>
+
+
 
 </mapper>

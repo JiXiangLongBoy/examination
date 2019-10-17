@@ -1,11 +1,14 @@
 package com.qfedu.examination.controller;
 
+import com.qfedu.examination.entity.ExamTime;
 import com.qfedu.examination.service.ExamTimeManageService;
 import com.qfedu.examination.vo.R;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,11 +19,23 @@ public class ExamTimeManageController {
     @Autowired
     ExamTimeManageService examTimeManageService;
 
-    @GetMapping("/queryExamTimeList")
+    @ApiOperation(value = "展示所有考试时间",notes = "不需要参数")
+    @GetMapping("/queryAllExamTimeList")
     public R queryAllExamTime(){
-
         return examTimeManageService.queryAllExamTime();
-
     }
+
+    @ApiOperation(value = "展示单条考试时间的接口",notes = "点击修改编辑考试时间调用的接口")
+    @PostMapping("/queryOneExamTime")
+    public R queryOneExamTime(int id){
+        return examTimeManageService.queryOneExamTime(id);
+    }
+
+    @ApiOperation(value = "保存考试时间",notes = "保存已经编辑好的考试时间接口")
+    @PostMapping("saveexamtime")
+    public R saveExamTime(ExamTime examTime){
+        return examTimeManageService.saveExamTime(examTime);
+    }
+
 
 }
