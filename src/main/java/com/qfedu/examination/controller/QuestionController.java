@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @Api(value = "考试管理接口",tags = "考试管理接口")
 public class QuestionController {
 

@@ -4,6 +4,7 @@ import com.qfedu.examination.common.JsonResult;
 import com.qfedu.examination.entity.User;
 import com.qfedu.examination.service.UserService;
 import com.qfedu.examination.utils.StrUtil;
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -20,6 +21,7 @@ import java.util.List;
 // 支持跨域
 @CrossOrigin
 @Controller
+@Api(value = "登录接口",tags = "登录接口")
 public class LoginController {
 
     @Autowired

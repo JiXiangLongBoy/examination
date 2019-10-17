@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.examination.dao.ExamTImeManageDao">
+
+    <select id="queryAllExamTime" resultType="com.qfedu.examination.entity.ExamTime">
+        select e.*,s.sname from t_examtimemanage e inner join t_subject s where e.sid = s.sid
+    </select>
+
+</mapper>

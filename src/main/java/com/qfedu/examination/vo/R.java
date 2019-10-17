@@ -15,6 +15,15 @@ public class R {
         r.setData(obj);
         return r;
     }
+
+    public static R setOK(Object obj){
+        R r=new R();
+        r.setCode(200);
+        r.setMsg("success");
+        r.setData(obj);
+        return r;
+    }
+
     public static R setOK(String msg){
         R r=new R();
         r.setCode(200);
