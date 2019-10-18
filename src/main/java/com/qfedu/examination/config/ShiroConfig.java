@@ -1,4 +1,3 @@
-/*
 package com.qfedu.examination.config;
 
 import com.qfedu.examination.filter.MyLogoutFilter;
@@ -130,4 +129,3 @@ public class ShiroConfig {
         return logoutFilter;
     }
 }
-*/
