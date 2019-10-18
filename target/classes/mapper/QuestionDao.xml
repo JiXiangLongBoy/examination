@@ -85,5 +85,33 @@
         where id=#{id}
     </update>
 
+    <select id="queryOneQuestionType" parameterType="int" resultType="com.qfedu.examination.entity.QuestionType">
+        select id,tname from t_question_type where id=#{id}
+    </select>
+
+    <insert id="saveQuestionType" parameterType="com.qfedu.examination.entity.QuestionType">
+        insert into t_question_type values(null,#{tname})
+    </insert>
+
+    <update id="updateQuestionType" parameterType="com.qfedu.examination.entity.QuestionType">
+        update t_question_type set tname=#{tname} where id=#{id}
+    </update>
+
+    <delete id="delQuestionType" parameterType="int">
+        delete from t_question_type where id=#{id}
+    </delete>
+
+    <select id="queryChoiceCount" resultType="int">
+        select count(1) from t_choice
+    </select>
+
+    <select id="queryJudgeCount" resultType="int">
+        select count(1) from t_judge
+    </select>
+
+    <select id="queryShortCount" resultType="int">
+        select count(1) from t_short
+    </select>
+
 
 </mapper>

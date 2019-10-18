@@ -33,7 +33,12 @@ public class ExamTimeManageServiceImpl implements ExamTimeManageService {
     @Override
     public R saveExamTime(ExamTime examTime) {
         Integer id = examTime.getId();
-        examTime.setDuration(12);
+        long begin = examTime.getBegins().getTime();
+        long end =examTime.getEnds().getTime();
+        long count =((end - begin)/1000/60);
+        System.out.println(count+"分钟");
+        int success = (int) count;
+        examTime.setDuration(success);
         if (id == null || id == 0) {
             System.out.println(examTime.getBegins());
             System.out.println(examTime.getEnds());

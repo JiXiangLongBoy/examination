@@ -39,4 +39,18 @@ public interface QuestionDao {
     int updateJudge(JudgeQuestion judgeQuestion);
 
     int updateShort(ShortQuestion shortQuestion);
+
+    QuestionType queryOneQuestionType(int id);
+
+    int saveQuestionType(QuestionType questionType);
+
+    int updateQuestionType(QuestionType questionType);
+
+    int delQuestionType(int id);
+
+    int queryChoiceCount();
+
+    int queryJudgeCount();
+
+    int queryShortCount();
 }

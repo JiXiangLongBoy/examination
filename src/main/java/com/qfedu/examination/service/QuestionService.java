@@ -3,6 +3,7 @@ package com.qfedu.examination.service;
 
 import com.qfedu.examination.entity.ChoiceQuestion;
 import com.qfedu.examination.entity.JudgeQuestion;
+import com.qfedu.examination.entity.QuestionType;
 import com.qfedu.examination.entity.ShortQuestion;
 import com.qfedu.examination.vo.R;
 
@@ -51,4 +52,12 @@ public interface QuestionService {
     R saveShort(ShortQuestion shortQuestion);
 
     R shortListByID(int id);
+
+    R queryOneQuestionType(int id);
+
+    R saveQuestionType(QuestionType questionType);
+
+    R delQuestionType(int id);
+
+    R randomCreateQuestion(int choiceCount,int judgeCount,int shortCount);
 }

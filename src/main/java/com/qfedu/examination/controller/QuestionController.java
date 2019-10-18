@@ -2,6 +2,7 @@ package com.qfedu.examination.controller;
 
 import com.qfedu.examination.entity.ChoiceQuestion;
 import com.qfedu.examination.entity.JudgeQuestion;
+import com.qfedu.examination.entity.QuestionType;
 import com.qfedu.examination.entity.ShortQuestion;
 import com.qfedu.examination.service.QuestionService;
 import com.qfedu.examination.vo.R;
@@ -30,9 +31,23 @@ public class QuestionController {
         return questionService.showQuestionType();
     }
 
+    @ApiOperation(value = "展示单个试题的分类详情",notes = "展示单个试题的分类详情")
+    @GetMapping("/question/queryonequestiontype")
+    public R queryOneQuestionType(int id){
+        return questionService.queryOneQuestionType(id);
+    }
 
+    @ApiOperation(value = "保存(修改)试题分类",notes = "保存(修改)试题分类")
+    @PostMapping("/question/savequestiontype")
+    public R saveQuestionType(QuestionType questionType){
+        return questionService.saveQuestionType(questionType);
+    }
 
-
+    @ApiOperation(value = "删除试题分类",notes = "删除试题分类接口")
+    @GetMapping("/question/delquestiontype")
+    public R delQuestionType(int id){
+        return questionService.delQuestionType(id);
+    }
 
 
     @ApiOperation(value = "展示对应科目的选择题",notes = "展示对应科目的选择题")
@@ -155,5 +170,12 @@ public class QuestionController {
     @PostMapping("/question/shortEntering")
     public R saveShort(ShortQuestion shortQuestion){
         return questionService.saveShort(shortQuestion);
+    }
+
+
+    @ApiOperation(value = "随机生成试卷",notes = "随机生成试卷接口")
+    @PostMapping("/question/randomcreatequestion")
+    public R randomCreateQuestion(int choiceCount,int judgeCount,int shortCount){
+        return questionService.randomCreateQuestion(choiceCount,judgeCount,shortCount);
     }
 }
