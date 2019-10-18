@@ -9,4 +9,6 @@ public interface ExamTimeManageService {
     R queryOneExamTime(int id);
 
     R saveExamTime(ExamTime examTime);
+
+    R deleteExamTime(int id);
 }

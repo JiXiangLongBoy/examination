@@ -38,4 +38,9 @@ public class ExamTimeManageController {
     }
 
 
+    @ApiOperation(value = "删除考试时间记录",notes = "删除考试时间记录接口")
+    @GetMapping("deleteexamtime")
+    public R deleteExamTime(int id){
+        return examTimeManageService.deleteExamTime(id);
+    }
 }

@@ -21,6 +21,9 @@
         where id = #{id}
     </update>
 
+    <delete id="deleteExamTime" parameterType="int">
+        delete from t_examtime where id=#{id}
+    </delete>
 
 
 </mapper>

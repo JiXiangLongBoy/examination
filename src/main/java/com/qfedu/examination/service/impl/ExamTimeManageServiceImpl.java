@@ -42,7 +42,13 @@ public class ExamTimeManageServiceImpl implements ExamTimeManageService {
             return result == 1 ? R.setOK("保存成功") : R.setERROR("保存失败");
         } else {
             int result = examTImeManageDao.updateExamTime(examTime);
-            return result == 1 ? R.setOK("保存成功") : R.setERROR("保存失败");
+            return result == 1 ? R.setOK("修改成功") : R.setERROR("修改失败");
         }
+    }
+
+    @Override
+    public R deleteExamTime(int id) {
+        int result=examTImeManageDao.deleteExamTime(id);
+        return R.setResult(result==1,"删除记录");
     }
 }

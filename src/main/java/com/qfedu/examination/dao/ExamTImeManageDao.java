@@ -12,4 +12,6 @@ public interface ExamTImeManageDao {
     int saveExamTime(ExamTime examTime);
 
     int updateExamTime(ExamTime examTime);
+
+    int deleteExamTime(int id);
 }
