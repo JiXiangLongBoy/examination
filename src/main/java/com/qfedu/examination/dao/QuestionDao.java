@@ -1,6 +1,7 @@
 package com.qfedu.examination.dao;
 
 import com.qfedu.examination.entity.*;
+import com.qfedu.examination.model.RandomCreateQuestionModel;
 import com.qfedu.examination.vo.R;
 
 import java.util.List;
@@ -53,4 +54,14 @@ public interface QuestionDao {
     int queryJudgeCount();
 
     int queryShortCount();
+
+    int saveRandomQuestion(RandomCreateQuestion randomCreateQuestion);
+
+    List<RandomCreateQuestionModel> queryAllRandomQuestion(int subID);
+
+    void delRandomQuestion(int id);
+
+    RandomCreateQuestionModel queryOneRandomQuestion(int id);
+
+    int updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel);
 }

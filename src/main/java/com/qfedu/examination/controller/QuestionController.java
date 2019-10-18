@@ -4,6 +4,7 @@ import com.qfedu.examination.entity.ChoiceQuestion;
 import com.qfedu.examination.entity.JudgeQuestion;
 import com.qfedu.examination.entity.QuestionType;
 import com.qfedu.examination.entity.ShortQuestion;
+import com.qfedu.examination.model.RandomCreateQuestionModel;
 import com.qfedu.examination.service.QuestionService;
 import com.qfedu.examination.vo.R;
 import io.swagger.annotations.Api;
@@ -173,9 +174,34 @@ public class QuestionController {
     }
 
 
+
+    @ApiOperation(value = "根据课程id展示所有已经生成的对应课程试卷列表",notes = "展示所有已经生成的试卷")
+    @GetMapping("/question/queryallrandomquestion")
+    public R queryAllRandomQuestion(int subID){
+        return questionService.queryAllRandomQuestion(subID);
+    }
+
     @ApiOperation(value = "随机生成试卷",notes = "随机生成试卷接口")
     @PostMapping("/question/randomcreatequestion")
-    public R randomCreateQuestion(int choiceCount,int judgeCount,int shortCount){
-        return questionService.randomCreateQuestion(choiceCount,judgeCount,shortCount);
+    public R randomCreateQuestion(String name,int choiceCount,int judgeCount,int shortCount,int subjectID){
+        return questionService.randomCreateQuestion(name,choiceCount,judgeCount,shortCount,subjectID);
+    }
+
+    @ApiOperation(value = "删除已经生成的试卷",notes = "删除已经生成的试卷")
+    @GetMapping("/question/delrandomquestion")
+    public R delRandomQuestion(int id){
+        return questionService.delRandomQuestion(id);
+    }
+
+    @ApiOperation(value = "根据单个试卷ID展示试卷的信息",notes = "修改时输入框自动填充已存在数据")
+    @GetMapping("/question/queryonerandomquestion")
+    public R queryOneRandomQuestion(int id){
+        return questionService.queryOneRandomQuestion(id);
+    }
+
+    @ApiOperation(value = "修改试卷的信息",notes = "根据单个试卷ID修改试卷的信息")
+    @GetMapping("/question/updaterandomquestion")
+    public R updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel){
+        return questionService.updateRandomQuestion(randomCreateQuestionModel);
     }
 }

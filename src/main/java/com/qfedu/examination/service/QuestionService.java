@@ -5,6 +5,7 @@ import com.qfedu.examination.entity.ChoiceQuestion;
 import com.qfedu.examination.entity.JudgeQuestion;
 import com.qfedu.examination.entity.QuestionType;
 import com.qfedu.examination.entity.ShortQuestion;
+import com.qfedu.examination.model.RandomCreateQuestionModel;
 import com.qfedu.examination.vo.R;
 
 public interface QuestionService {
@@ -59,5 +60,13 @@ public interface QuestionService {
 
     R delQuestionType(int id);
 
-    R randomCreateQuestion(int choiceCount,int judgeCount,int shortCount);
+    R randomCreateQuestion(String name,int choiceCount,int judgeCount,int shortCount,int subjectID);
+
+    R queryAllRandomQuestion(int subID);
+
+    R delRandomQuestion(int id);
+
+    R queryOneRandomQuestion(int id);
+
+    R updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel);
 }

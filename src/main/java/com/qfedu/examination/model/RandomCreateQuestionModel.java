@@ -1,4 +1,4 @@
-package com.qfedu.examination.entity;
+package com.qfedu.examination.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,20 +7,16 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RandomCreateQuestion {
+public class RandomCreateQuestionModel {
     private Integer id;
-
     private String name;
 
-    private String cid;
-
-    private String jid;
-
-    private String shid;
-
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(hidden = true)
     private Date createTime;
+
+    private int subID;
+
     @ApiModelProperty(hidden = true)
-    private Integer subID;
+    private String sname;
 }

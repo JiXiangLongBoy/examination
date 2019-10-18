@@ -113,5 +113,27 @@
         select count(1) from t_short
     </select>
 
+    <insert id="saveRandomQuestion" parameterType="randomcreatequestion">
+        insert into t_random_question values (null,#{name},#{cid},#{jid},#{shid},#{createTime},#{subID})
+    </insert>
+
+    <delete id="delRandomQuestion" parameterType="int">
+        delete from t_random_question where id=#{id}
+    </delete>
+
+    <update id="updateRandomQuestion" parameterType="com.qfedu.examination.model.RandomCreateQuestionModel">
+        update t_random_question set name=#{name},subid=#{subID} where id=#{id}
+    </update>
+
+    <select id="queryAllRandomQuestion" parameterType="int" resultType="com.qfedu.examination.model.RandomCreateQuestionModel">
+        select rq.id,rq.name,rq.createtime,sub.sname from t_random_question rq
+        inner join t_subject sub where rq.subid=#{subID} and rq.subid=sub.sid
+    </select>
+
+    <select id="queryOneRandomQuestion" parameterType="int" resultType="com.qfedu.examination.model.RandomCreateQuestionModel">
+        select rq.id,rq.name,rq.createtime,rq.subid,sub.sname from t_random_question rq
+        inner join t_subject sub where rq.id=#{id} and rq.subid=sub.sid
+    </select>
+
 
 </mapper>

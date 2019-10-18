@@ -1,10 +1,8 @@
 package com.qfedu.examination.service.impl;
 
 import com.qfedu.examination.dao.QuestionDao;
-import com.qfedu.examination.entity.ChoiceQuestion;
-import com.qfedu.examination.entity.JudgeQuestion;
-import com.qfedu.examination.entity.QuestionType;
-import com.qfedu.examination.entity.ShortQuestion;
+import com.qfedu.examination.entity.*;
+import com.qfedu.examination.model.RandomCreateQuestionModel;
 import com.qfedu.examination.poi.*;
 import com.qfedu.examination.random.RandomCreateQuestionID;
 import com.qfedu.examination.service.QuestionService;
@@ -14,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -260,26 +256,82 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public R randomCreateQuestion(int choiceCount, int judgeCount, int shortCount) {
+    public R randomCreateQuestion(String name, int choiceCount, int judgeCount, int shortCount, int subjectID) {
 
-        List<ChoiceQuestion> list = questionDao.choiceList(1);
+        RandomCreateQuestion randomCreateQuestion = new RandomCreateQuestion();
+        randomCreateQuestion.setName(name);
+        randomCreateQuestion.setSubID(subjectID);
+        StringBuffer str = new StringBuffer();
 
-        StringBuffer strChoiceID = new StringBuffer();
+        List<ChoiceQuestion> choiceList = questionDao.choiceList(subjectID);
 
-        int count = list.size();
-        if (choiceCount>count){
-            return R.setERROR("生成试题数量超出范围");
+
+        int choiceNum = choiceList.size();
+        if (choiceCount > choiceNum) {
+            return R.setERROR("生成选择题数量超出范围");
         }
-        int[] randoms = RandomCreateQuestionID.Randoms(count, choiceCount);
+        int[] choiceRandoms = RandomCreateQuestionID.Randoms(choiceNum, choiceCount);
 
-        for (int s : randoms) {
-            strChoiceID.append(list.get(s).getId()+",");
+        for (int s : choiceRandoms) {
+            str.append(choiceList.get(s).getId() + ",");
         }
-        strChoiceID.delete(strChoiceID.lastIndexOf(","),strChoiceID.lastIndexOf(",")+1);
+        str.delete(str.lastIndexOf(","), str.lastIndexOf(",") + 1);
+        randomCreateQuestion.setCid(str.toString());
+        str.delete(0, str.length() + 1);
 
+        List<JudgeQuestion> judgeList = questionDao.judgeList(subjectID);
+        int judgeNum = judgeList.size();
+        if (judgeCount > judgeNum) {
+            return R.setERROR("生成判断题数量超出范围");
+        }
 
+        int[] judgeRandoms = RandomCreateQuestionID.Randoms(judgeNum, judgeCount);
 
-        return null;
+        for (int j : judgeRandoms) {
+            str.append(judgeList.get(j).getId() + ",");
+        }
+        str.delete(str.lastIndexOf(","), str.lastIndexOf(",") + 1);
+        randomCreateQuestion.setJid(str.toString());
+        str.delete(0, str.length() + 1);
 
+        List<ShortQuestion> shortList = questionDao.queryShort(subjectID);
+        int shortNum = shortList.size();
+        if (shortCount > shortNum) {
+            return R.setERROR("生成简答题长度超出范围");
+        }
+        int[] shortRandoms = RandomCreateQuestionID.Randoms(shortNum, shortCount);
+        for (int s : shortRandoms) {
+            str.append(shortList.get(s).getId() + ",");
+        }
+        str.delete(str.lastIndexOf(","), str.lastIndexOf(",") + 1);
+        randomCreateQuestion.setShid(str.toString());
+        str.delete(0, str.length() + 1);
+        randomCreateQuestion.setCreateTime(new Date());
+        int result = questionDao.saveRandomQuestion(randomCreateQuestion);
+        return result == 1 ? R.setOK("随机生成试卷成功") : R.setERROR("随机生成试卷失败");
+    }
+
+    @Override
+    public R queryAllRandomQuestion(int subID) {
+        List<RandomCreateQuestionModel> list = questionDao.queryAllRandomQuestion(subID);
+        return list!=null?R.setOK(list):R.setOK("对应课程的试卷为空");
+    }
+
+    @Override
+    public R delRandomQuestion(int id) {
+        questionDao.delRandomQuestion(id);
+        return R.setOK("删除记录");
+    }
+
+    @Override
+    public R queryOneRandomQuestion(int id) {
+        RandomCreateQuestionModel randomCreateQuestionModel = questionDao.queryOneRandomQuestion(id);
+        return R.setOK(randomCreateQuestionModel);
+    }
+
+    @Override
+    public R updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel) {
+       int result = questionDao.updateRandomQuestion(randomCreateQuestionModel);
+        return result==1?R.setOK("修改成功"):R.setERROR("修改失败");
     }
 }
