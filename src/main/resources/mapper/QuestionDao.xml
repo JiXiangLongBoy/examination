@@ -7,7 +7,9 @@
     <select id="showSubjectType" resultType="com.qfedu.examination.entity.Subject">
         select * from t_subject
     </select>
-
+    <select id="queryOneSubjectType" resultType="com.qfedu.examination.entity.Subject">
+        select * from t_subject where sid=#{subjectID}
+    </select>
     <select id="showQuestionType" resultType="com.qfedu.examination.entity.QuestionType">
         select * from t_question_type
     </select>

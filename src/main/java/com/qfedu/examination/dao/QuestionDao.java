@@ -64,4 +64,6 @@ public interface QuestionDao {
     RandomCreateQuestionModel queryOneRandomQuestion(int id);
 
     int updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel);
+
+    Subject queryOneSubjectType(int subjectID);
 }

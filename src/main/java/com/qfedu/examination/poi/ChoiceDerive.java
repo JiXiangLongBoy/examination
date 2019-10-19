@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ChoiceDerive {
-    public static void  createExcel(List<ChoiceQuestion> choiceList,String filePath,String fileName) throws IOException {
+    public static SXSSFWorkbook  createExcel(List<ChoiceQuestion> choiceList) throws IOException {
         //1、创建文档对象
         SXSSFWorkbook workbook=new SXSSFWorkbook();
         //2、创建Sheet
@@ -82,8 +82,7 @@ public class ChoiceDerive {
         }
 
         //5、保存x
-        workbook.write(new FileOutputStream(filePath+"\\"+fileName+".xlsx"));
-        workbook.close();
-        System.out.println("生成成功");
+//        workbook.write(new FileOutputStream(filePath+"\\"+fileName+".xlsx"));
+        return workbook;
     }
 }

@@ -1,5 +1,6 @@
 package com.qfedu.examination.service.impl;
 
+import com.qfedu.examination.common.J;
 import com.qfedu.examination.dao.QuestionDao;
 import com.qfedu.examination.entity.*;
 import com.qfedu.examination.model.RandomCreateQuestionModel;
@@ -8,10 +9,15 @@ import com.qfedu.examination.random.RandomCreateQuestionID;
 import com.qfedu.examination.service.QuestionService;
 import com.qfedu.examination.vo.R;
 import io.swagger.models.auth.In;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -28,9 +34,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public R showQuestionType() {
+    public J showQuestionType() {
 
-        return R.setOK("success", questionDao.showQuestionType());
+//        return R.setOK("success", questionDao.showQuestionType());
+        return J.setOK(questionDao.showQuestionType());
     }
 
     @Override
@@ -39,19 +46,39 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public R deriveChoice(int subjectID, String filePath, String fileName) {
+    public R deriveChoice(int subjectID) {
         List<ChoiceQuestion> choiceQuestions = questionDao.choiceList(subjectID);
+        SXSSFWorkbook excel = null;
         try {
-            ChoiceDerive.createExcel(choiceQuestions, filePath, fileName);
+             excel = ChoiceDerive.createExcel(choiceQuestions);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return R.setOK("导出成功");
+        return R.setOK("导出成功",excel);
     }
 
+
+
+
     @Override
-    public R toLeadChoice(String filePath) {
-        List<ChoiceQuestion> toLead = ChoiceToLead.Tolead(filePath);
+    public R toLeadChoice(MultipartFile multipartFile, HttpServletRequest request) {
+        String path = "d:/img/";
+        String dir = "xlsx/";
+        String fname = multipartFile.getOriginalFilename();
+        String filename = UUID.randomUUID().toString().replace("-", "").toUpperCase() + fname;
+        File file = new File(path + dir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        try {
+            multipartFile.transferTo(new File(file, filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println(path+dir+filename);
+        List<ChoiceQuestion> toLead = ChoiceToLead.Tolead(path+dir+filename);
         if (toLead == null || toLead.equals("") || toLead.size() == 0) {
             return R.setERROR("文件不存在，导入失败");
         }
@@ -314,7 +341,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public R queryAllRandomQuestion(int subID) {
         List<RandomCreateQuestionModel> list = questionDao.queryAllRandomQuestion(subID);
-        return list!=null?R.setOK(list):R.setOK("对应课程的试卷为空");
+        return list != null ? R.setOK(list) : R.setOK("对应课程的试卷为空");
     }
 
     @Override
@@ -331,7 +358,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public R updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel) {
-       int result = questionDao.updateRandomQuestion(randomCreateQuestionModel);
-        return result==1?R.setOK("修改成功"):R.setERROR("修改失败");
+        int result = questionDao.updateRandomQuestion(randomCreateQuestionModel);
+        return result == 1 ? R.setOK("修改成功") : R.setERROR("修改失败");
+    }
+
+    @Override
+    public Subject queryOneSubjectType(int subjectID) {
+
+        return questionDao.queryOneSubjectType(subjectID);
     }
 }

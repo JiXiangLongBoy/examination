@@ -1,25 +1,27 @@
 package com.qfedu.examination.service;
 
 
-import com.qfedu.examination.entity.ChoiceQuestion;
-import com.qfedu.examination.entity.JudgeQuestion;
-import com.qfedu.examination.entity.QuestionType;
-import com.qfedu.examination.entity.ShortQuestion;
+import com.qfedu.examination.common.J;
+import com.qfedu.examination.entity.*;
 import com.qfedu.examination.model.RandomCreateQuestionModel;
 import com.qfedu.examination.vo.R;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface QuestionService {
 
 
     R showSubjectType();
 
-    R showQuestionType();
+    J showQuestionType();
 
     R choiceList(int subjectID);
 
-    R deriveChoice(int subjectID,String filePath,String fileName);
+    R deriveChoice(int subjectID);
 
-    R toLeadChoice(String filePath);
+    R toLeadChoice(MultipartFile multipartFile, HttpServletRequest request);
 
 
     R choiceListByID(int id);
@@ -69,4 +71,6 @@ public interface QuestionService {
     R queryOneRandomQuestion(int id);
 
     R updateRandomQuestion(RandomCreateQuestionModel randomCreateQuestionModel);
+
+    Subject queryOneSubjectType(int subjectID);
 }

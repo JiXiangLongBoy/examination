@@ -1,16 +1,25 @@
 package com.qfedu.examination.controller;
 
-import com.qfedu.examination.entity.ChoiceQuestion;
-import com.qfedu.examination.entity.JudgeQuestion;
-import com.qfedu.examination.entity.QuestionType;
-import com.qfedu.examination.entity.ShortQuestion;
+import com.qfedu.examination.common.J;
+import com.qfedu.examination.common.OutPut;
+import com.qfedu.examination.entity.*;
 import com.qfedu.examination.model.RandomCreateQuestionModel;
 import com.qfedu.examination.service.QuestionService;
 import com.qfedu.examination.vo.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -28,7 +37,7 @@ public class QuestionController {
 
     @ApiOperation(value = "展示题目类型",notes = "展示所有的题目类型")
     @GetMapping("/question/showQuestionType")
-    public R showQuestionType(){
+    public J showQuestionType(){
         return questionService.showQuestionType();
     }
 
@@ -59,14 +68,31 @@ public class QuestionController {
 
     @ApiOperation(value = "导出对应科目的选择题",notes = "导出对应科目的选择题")
     @GetMapping("/question/deriveChoice")
-    public R deriveChoice(int subjectID,String filePath,String fileName){
-        return questionService.deriveChoice(subjectID,filePath,fileName);
+    public void deriveChoice(HttpServletResponse response, int subjectID){
+       Subject subject =  questionService.queryOneSubjectType(subjectID);
+        R r = questionService.deriveChoice(subjectID);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String format = simpleDateFormat.format(new Date());
+
+        String fileName = subject.getSname()+"选择题"+format+".xlsx";
+        OutPut.setResponseHeader(response,fileName);
+        SXSSFWorkbook wb = (SXSSFWorkbook) r.getData();
+        OutPut.setResponseHeader(response,fileName);
+        OutputStream os = null;
+        try {
+            os = response.getOutputStream();
+            wb.write(os);
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @ApiOperation(value = "导入对应科目的选择题",notes = "导入对应科目的选择题")
-    @GetMapping("/question/toLeadChoice")
-    public R toLeadChoice(String filePath){
-        return questionService.toLeadChoice(filePath);
+    @PostMapping("/question/toLeadChoice")
+    public R toLeadChoice(MultipartFile file, HttpServletRequest request){
+        return questionService.toLeadChoice(file,request);
     }
 
     @ApiOperation(value = "删除对应科目的选择题",notes = "删除对应科目的选择题")
