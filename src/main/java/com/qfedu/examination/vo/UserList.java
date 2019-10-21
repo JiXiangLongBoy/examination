@@ -11,6 +11,6 @@ public class UserList {
     private Integer uid;
     private String username;
     private String password;
-    private List<Role> role;
     private String rdesc;
+    private List<Role> role;
 }

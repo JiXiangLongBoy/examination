@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface StudentDao {
 
+    public Student findByEmail(String email);
+
     //查询所有的学生信息
-    public List<Student> findAllStudent();
+    public List<Student> findAllStudent(String sname);
 
     //添加学生信息
     public void addStudent(Student student);

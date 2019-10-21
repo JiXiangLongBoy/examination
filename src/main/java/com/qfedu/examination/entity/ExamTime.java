@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 public class ExamTime {
     private int id;
-    private int sID;
+    private Integer sID;
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)
@@ -95,6 +95,7 @@ public class ExamTime {
 
     public void setBeginTime(String beginTime) {
         Date parse = null;
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
              parse = simpleDateFormat.parse(beginTime);

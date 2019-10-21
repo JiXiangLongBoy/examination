@@ -21,7 +21,7 @@ import java.util.List;
 public class MyRealm extends AuthorizingRealm {
 
     @Autowired
-   // @Lazy //使用redis缓存shiro中数据时，需要使用该注解
+    // @Lazy //使用redis缓存shiro中数据时，需要使用该注解
     private UserService userService;
 
     //获取授权信息
@@ -36,7 +36,7 @@ public class MyRealm extends AuthorizingRealm {
 
         //授权信息对象
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(new HashSet<>(list));
+        info.setStringPermissions(new HashSet(list));
 
         return info;
     }
@@ -51,6 +51,7 @@ public class MyRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo info = null;
         if (user == null){
             info = new SimpleAuthenticationInfo("","",this.getName());
+            throw new RuntimeException("用户名错误");
         } else {   //身份认证的信息对象
             //第一个参数: 用户的身份信息 用户名
             //第二个参数: 用户的凭证信息 密码

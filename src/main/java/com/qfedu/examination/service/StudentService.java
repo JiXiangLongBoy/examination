@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface StudentService {
 
+    public Student StuLogin(String email,String password);
+
     //查询所有的学生信息
-    public List<Student> findAllStudent(Integer page, Integer limit);
+    public List<Student> findAllStudent(Integer page, Integer limit,String sname);
 
     //添加学生信息
     public void addStudent(Student student);

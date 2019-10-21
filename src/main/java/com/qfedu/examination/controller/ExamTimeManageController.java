@@ -26,14 +26,16 @@ public class ExamTimeManageController {
     }
 
     @ApiOperation(value = "展示单条考试时间的接口",notes = "点击修改编辑考试时间调用的接口")
-    @PostMapping("/queryOneExamTime")
+    @GetMapping("/queryOneExamTime")
     public R queryOneExamTime(int id){
         return examTimeManageService.queryOneExamTime(id);
     }
 
     @ApiOperation(value = "保存考试时间",notes = "保存已经编辑好的考试时间接口")
-    @PostMapping("saveexamtime")
+    @PostMapping("/saveexamtime")
     public R saveExamTime(ExamTime examTime){
+        System.out.println(examTime.getBeginTime());
+        System.out.println(examTime.getEndTime());
         return examTimeManageService.saveExamTime(examTime);
     }
 

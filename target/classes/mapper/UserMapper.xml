@@ -15,6 +15,13 @@
         </collection>
     </resultMap>
 
+    <insert id="addUser" parameterType="user">
+        <selectKey resultType="java.lang.Integer" keyProperty="uid" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into t_user values (null ,#{username},#{password})
+    </insert>
+
     <select id="findByName" parameterType="string" resultType="user">
         select * from t_user where username = #{username}
     </select>
@@ -52,17 +59,22 @@
         AND p.pdesc !='' AND p.pdesc is NOT NULL;
     </select>
 
-    <select id="findRolesAll"  resultMap="userMap">
-        select r.rdesc, u.username, u.password, u.uid
-		from t_user u
+    <select id="findUserAll"  resultMap="userMap">
+        select u.*,r.rdesc
+        from t_user u
         inner join t_user_role ur
         on u.uid=ur.uid
         inner join t_role r
         on r.rid=ur.rid
+        <where>
+            <if test="username != null and username !=''">
+                username = #{username}
+            </if>
+        </where>
     </select>
 
     <select id="findRoleId" parameterType="int" resultMap="userMap">
-        select r.rdesc, u.username, u.password
+        select  u.*,r.rdesc
 		from t_user u
         inner join t_user_role ur
         on u.uid=ur.uid
@@ -75,9 +87,27 @@
         insert into t_user_role (uid, rid) values (#{uid}, 1)
     </insert>
 
+    <insert id="addTheRole" parameterType="int" >
+        insert into t_user_role (uid, rid) values (#{uid}, 2)
+    </insert>
+
     <delete id="deleteRole" parameterType="int" >
         delete from t_user_role where uid = #{uid} and rid = 1
     </delete>
 
+    <select id="findByTeaIdUserId" resultType="int">
+        select r.rid
+         from t_user u
+         inner join t_user_role ur
+         on u.uid=ur.uid
+         inner join t_role r
+         on r.rid=ur.rid
+         where r.rid = 2 and u.uid = #{uid}
+    </select>
 
-    </mapper>
+    <select id="findRoleAll" resultType="com.qfedu.examination.entity.Role">
+        select * from t_role
+    </select>
+
+
+</mapper>

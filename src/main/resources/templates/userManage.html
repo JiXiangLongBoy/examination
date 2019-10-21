@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #content{
+            margin:20px auto;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" />
+    <script type="text/javascript" th:src="@{/layui/layui.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}" ></script>
+</head>
+<body>
+<div id="content">
+
+    <div class="layui-form searchDiv">
+        <div class="layui-form-item">
+            <div class="layui-inline" style="margin-left: 20px">
+                <div class="layui-btn-group demoTable">
+                    <button type="button" class="layui-btn" data-method="offset" data-type="auto" ><i class="layui-icon">&#xe608;</i> 添加</button>
+                </div>
+            </div>
+
+            <div class="layui-inline" style="float: right">
+                <div class="layui-input-inline">
+                    <input type="text"id="uname"  lay-verify="title" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                </div>
+                <button type="button" class="layui-btn" id="search" data-type="reload" style="margin-bottom: 5px">搜索</button>
+            </div>
+
+        </div>
+    </div>
+
+    <table class="layui-hide" id="studentTable" lay-filter="test"></table>
+
+</div>
+<script type="text/html" id="indexTpl">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+
+<script>
+    layui.use(['laypage', 'layer', 'table', 'element','form'], function(){
+        var $ = layui.jquery
+            , laypage = layui.laypage //分页
+            , layer = layui.layer //弹层
+            ,table = layui.table //表格
+            ,element = layui.element //元素操作
+            ,form = layui.form
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#studentTable'
+            ,height: 420
+            ,url: 'userList' //数据接口
+            ,title: '用户表'
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 3 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+                ,limit:5
+                ,limits:[5,10,15]
+            }
+            ,cols: [
+                [ //表头
+                    {field: 'uid', title: '用户ID', width: 80, align: "center"}
+                    ,{field: 'rdesc', align:'center', title: '角色', width:200,}
+                    ,{field: 'username', align:'center', title: '用户名', width:170}
+                    ,{field: 'password', align:'center', title: '密码', width: 400,totalRow: true}
+                ]
+            ]
+            ,id:'studentTable'
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                //执行重载
+                table.reload('studentTable', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        username:$('#uname').val()
+                    }
+                }, 'data');
+            },
+            offset: function(){
+                var that = this;
+                //多窗口模式，层叠置顶
+                layer.open({
+                    type: 2,
+                    title: '添加用户',
+                    shade: 0.8,
+                    area: ['500px', '350px'],
+                    content: 'adduser'
+                });
+            },
+        };
+
+        $('.searchDiv .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('.searchDiv .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+        // $(".layui-btn").click(function () {
+        //     var layer = layui.layer;
+        //
+        //     layer.open({
+        //         type: 2,
+        //         title: '添加用户',
+        //         shade: 0.8,
+        //         area: ['500px', '350px'],
+        //         content: 'adduser'
+        //     });
+        //
+        // })
+
+    });
+</script>
+</body>
+</html>

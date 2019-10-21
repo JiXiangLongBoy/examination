@@ -2,6 +2,8 @@ package com.qfedu.examination.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Permission {
 
@@ -11,4 +13,7 @@ public class Permission {
     private Integer type;
     private String url;
     private Integer parentId;
+
+    private List<Permission> permList;
+
 }

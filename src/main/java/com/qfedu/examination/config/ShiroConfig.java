@@ -29,29 +29,25 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 未登陆情况下，访问需要登陆后才能访问资源时，跳转到指定资源（比如登陆页面）
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/toLogin");
 
         // 当没有权限访问某些资源时，跳转到的资源
         shiroFilterFactoryBean.setUnauthorizedUrl("/notPermision");
 
         // 存放自定义的filter
-        LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap();
         //配置自定义登出 覆盖 logout 之前默认的LogoutFilter
         filtersMap.put("logout", myLogoutFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
 
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
         // authc:必须认证通过才可以访问;
         // anon: 匿名访问
         filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-        filterChainDefinitionMap.put("/swagger-resources", "anon");
-        filterChainDefinitionMap.put("/v2/api-docs", "anon");
-        filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/toLogin", "anon");
         filterChainDefinitionMap.put("/layui/**", "anon");
-        filterChainDefinitionMap.put("/bootstrap/**", "anon");
 
         filterChainDefinitionMap.put("/admin/**", "authc");
         filterChainDefinitionMap.put("/user/**", "authc");
@@ -86,7 +82,8 @@ public class ShiroConfig {
         return customRealm;
     }
 
-// 注解配置
+    */
+/* 注解配置 *//*
 
     @Bean
     public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
@@ -126,7 +123,7 @@ public class ShiroConfig {
     private MyLogoutFilter myLogoutFilter(){
         MyLogoutFilter logoutFilter = new MyLogoutFilter();
         //
-        logoutFilter.setRedirectUrl("/login");
+        logoutFilter.setRedirectUrl("/toLogin");
         return logoutFilter;
     }
 }

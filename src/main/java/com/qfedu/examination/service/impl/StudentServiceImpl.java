@@ -16,9 +16,21 @@ public class StudentServiceImpl implements StudentService {
     private StudentDao studentDao;
 
     @Override
-    public List<Student> findAllStudent(Integer page, Integer limit) {
+    public Student StuLogin(String email, String password) {
+        Student student = studentDao.findByEmail(email);
+        if (student == null){
+            throw new RuntimeException("账号不对");
+        }
+        if (!student.getPassword().equals(password)){
+            throw new RuntimeException("密码不对");
+        }
+        return student;
+    }
+
+    @Override
+    public List<Student> findAllStudent(Integer page, Integer limit,String sname) {
         PageHelper.startPage(page,limit);
-        List<Student> students = studentDao.findAllStudent();
+        List<Student> students = studentDao.findAllStudent(sname);
         return students;
     }
 

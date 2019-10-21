@@ -5,8 +5,17 @@
 
 <mapper namespace="com.qfedu.examination.dao.StudentDao">
 
+    <select id="findByEmail" resultType="student">
+        select * from t_student where email = #{email};
+    </select>
+
     <select id="findAllStudent" resultType="student">
         select * from t_student
+        <where>
+            <if test="sname != null and sname !='' ">
+                sname = #{sname}
+            </if>
+        </where>
     </select>
 
     <insert id="addStudent" parameterType="student">
