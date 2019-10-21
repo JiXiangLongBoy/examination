@@ -3,6 +3,7 @@ package com.qfedu.examination.service.impl;
 import com.qfedu.examination.dao.ExamTImeManageDao;
 import com.qfedu.examination.entity.ExamTime;
 import com.qfedu.examination.service.ExamTimeManageService;
+import com.qfedu.examination.vo.Page;
 import com.qfedu.examination.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,8 @@ public class ExamTimeManageServiceImpl implements ExamTimeManageService {
     ExamTImeManageDao examTImeManageDao;
 
     @Override
-    public R queryAllExamTime() {
-
-        List<ExamTime> examTimeList = examTImeManageDao.queryAllExamTime();
+    public R queryAllExamTime(Page page) {
+        List<ExamTime> examTimeList = examTImeManageDao.queryAllExamTime(page);
 
         return R.setOK(examTimeList);
     }

@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qfedu.examination.dao.ExamTImeManageDao">
 
-    <select id="queryAllExamTime" resultType="com.qfedu.examination.entity.ExamTime">
-        select e.*,s.sname from t_examtime e inner join t_subject s where e.sid = s.sid
+    <select id="queryAllExamTime" parameterType="com.qfedu.examination.vo.Page" resultType="com.qfedu.examination.entity.ExamTime">
+        select e.*,s.sname from t_examtime e inner join t_subject s where e.sid = s.sid limit #{begin},#{limit}
     </select>
 
     <select id="queryOneExamTime" parameterType="int" resultType="com.qfedu.examination.entity.ExamTime">

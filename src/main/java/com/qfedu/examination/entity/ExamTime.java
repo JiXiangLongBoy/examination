@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 public class ExamTime {
     private int id;
-    private Integer sID;
+    private int sID;
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)

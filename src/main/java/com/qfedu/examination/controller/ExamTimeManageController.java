@@ -2,6 +2,7 @@ package com.qfedu.examination.controller;
 
 import com.qfedu.examination.entity.ExamTime;
 import com.qfedu.examination.service.ExamTimeManageService;
+import com.qfedu.examination.vo.Page;
 import com.qfedu.examination.vo.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,8 +22,8 @@ public class ExamTimeManageController {
 
     @ApiOperation(value = "展示所有考试时间",notes = "不需要参数")
     @GetMapping("/queryAllExamTimeList")
-    public R queryAllExamTime(){
-        return examTimeManageService.queryAllExamTime();
+    public R queryAllExamTime(Page page){
+        return examTimeManageService.queryAllExamTime(page);
     }
 
     @ApiOperation(value = "展示单条考试时间的接口",notes = "点击修改编辑考试时间调用的接口")
